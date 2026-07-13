@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ profile.name }} | Portfolio Resume</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="page">
+        <section class="hero card">
+            <p class="eyebrow">Portfolio Resume</p>
+            <h1>Patrick Jayson Aglosolos</h1>
+            <p class="about">Computer Engineering student with a strong background in tech support, mechatronics, and CAD operations. Gained solid field experience through 320+ hours of OJT and currently competing at the National level in the Worldskills Philippines Mechanical Engineering CAD competition, having won Gold at both the Provincial and Regional levels in 2026. I focus on practical troubleshooting and building clean, functional systems.</p>
+            <div class="links">
+                <a href="mailto:jayson123aglosolos@gmail,com">Email</a>
+                <a href="https://www.linkedin.com/in/patrick-aglosolos-505631336/" target="_blank" rel="noreferrer">LinkedIn</a>
+            </div>
+        </section>
+
+        <section class="card">
+            <h3>Skills</h3>
+            <div class="tags">
+                • Programming Languages: Python, C#, C++, Java<br>
+                • Software Tools & Frameworks: Git, VSCode<br>
+                • CAD Software: AutoCAD, Inventor
+            </div>
+        </section>
+        <section class="card">
+            <h3>Awards</h3>
+            <div class="tags">
+                • Worldskills Bataan Provincial Skills Competition 2026  —  Mechanical Engineering CAD — Gold Medalist<br>
+                • Worldskills Central Luzon Regional Skills Competition 2026  —  Mechanical Engineering CAD — Gold Medalist<br>
+                • Worldskills Philippine National Skill Competition 2026  —  Mechanical Engineering CAD — Ongoing
+            </div>
+        </section>
+        <section class="card">
+            <h3>Projects</h3>
+            <div class="projects">
+                {% for project in profile.projects %}
+                    <article class="project">
+                        <h4>{{ project.name }}</h4>
+                        <p>{{ project.description }}</p>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+</body>
+</html>
