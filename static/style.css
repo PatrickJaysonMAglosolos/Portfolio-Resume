@@ -26,7 +26,7 @@ body {
     line-height: 1.6;
 }
 
-/* Navigation */
+
 .navbar {
     position: sticky;
     top: 0;
@@ -69,7 +69,7 @@ body {
     color: var(--accent);
 }
 
-/* Main Page */
+
 .page {
     max-width: 900px;
     margin: 0 auto;
@@ -105,7 +105,7 @@ body {
     color: var(--text);
 }
 
-/* Hero Section */
+
 .hero {
     background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
     padding: 48px 32px;
@@ -160,7 +160,7 @@ body {
     color: var(--muted);
 }
 
-/* Links Section */
+
 .links {
     display: flex;
     flex-wrap: wrap;
@@ -181,7 +181,7 @@ body {
     text-decoration: underline;
 }
 
-/* Resume Button */
+
 .resume-button {
     display: inline-flex;
     align-items: center;
@@ -217,7 +217,7 @@ body {
     justify-content: center;
 }
 
-/* Skills Grid */
+
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -253,7 +253,7 @@ body {
     font-size: 1rem;
 }
 
-/* Awards Section */
+
 .awards-list {
     display: grid;
     gap: 18px;
@@ -293,7 +293,7 @@ body {
     font-size: 0.95rem;
 }
 
-/* Projects */
+
 .projects {
     display: grid;
     gap: 16px;
@@ -342,7 +342,7 @@ body {
     font-size: 0.95rem;
 }
 
-/* Footer */
+
 .footer {
     text-align: center;
     padding: 24px 20px;
@@ -356,7 +356,7 @@ body {
     margin: 0;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
     .nav-container {
         flex-direction: column;
