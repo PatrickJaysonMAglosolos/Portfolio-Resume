@@ -253,5 +253,112 @@
             if (e.key === 'Escape') closeResume();
         });
     </script>
+
+    <!-- Chatbot UI -->
+    <style>
+        /* Simple chatbot styles */
+        #chatToggle {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #0b1726;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(11,23,38,0.2);
+            z-index: 10000;
+            border: none;
+        }
+        #chatModal {
+            position: fixed;
+            right: 20px;
+            bottom: 90px;
+            width: 320px;
+            max-height: 480px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            z-index: 10000;
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+        }
+        #chatHeader { padding: 12px; background: #0b1726; color: #fff; font-weight: 600; }
+        #chatMessages { padding: 12px; overflow-y: auto; flex: 1; background: #f8fafc; }
+        .message { margin-bottom: 10px; max-width: 80%; padding: 8px 10px; border-radius: 8px; }
+        .message.user { background: #0b1726; color: #fff; margin-left: auto; }
+        .message.bot { background: #e6eef6; color: #0b1726; margin-right: auto; }
+        #chatInputRow { display: flex; gap: 8px; padding: 10px; border-top: 1px solid #eee; }
+        #chatInput { flex: 1; padding: 8px 10px; border-radius: 6px; border: 1px solid #ddd; }
+        #chatSend { padding: 8px 12px; background: #0b1726; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
+    </style>
+
+    <button id="chatToggle" aria-label="Open chat">💬</button>
+    <div id="chatModal" role="dialog" aria-modal="false" aria-hidden="true">
+        <div id="chatHeader">Chatbot</div>
+        <div id="chatMessages" aria-live="polite"></div>
+        <div id="chatInputRow">
+            <input id="chatInput" type="text" placeholder="Ask about resume, skills, projects..." aria-label="Chat input" />
+            <button id="chatSend">Send</button>
+        </div>
+    </div>
+
+    <script>
+        (function(){
+            const toggle = document.getElementById('chatToggle');
+            const modal = document.getElementById('chatModal');
+            const messages = document.getElementById('chatMessages');
+            const input = document.getElementById('chatInput');
+            const send = document.getElementById('chatSend');
+
+            function scrollToBottom(){ messages.scrollTop = messages.scrollHeight; }
+
+            function addMessage(text, sender){
+                const el = document.createElement('div');
+                el.className = 'message ' + (sender === 'user' ? 'user' : 'bot');
+                el.textContent = text;
+                messages.appendChild(el);
+                scrollToBottom();
+            }
+
+            async function sendChat(){
+                const text = input.value.trim();
+                if(!text) return;
+                addMessage(text, 'user');
+                input.value = '';
+                try{
+                    const resp = await fetch('/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: text })
+                    });
+                    const j = await resp.json();
+                    addMessage(j.reply || 'No reply', 'bot');
+                }catch(err){
+                    addMessage('Error contacting chatbot.', 'bot');
+                    console.error(err);
+                }
+            }
+
+            toggle.addEventListener('click', function(){
+                const open = modal.style.display === 'flex';
+                modal.style.display = open ? 'none' : 'flex';
+                modal.setAttribute('aria-hidden', open ? 'true' : 'false');
+                if(!open){ input.focus(); }
+            });
+
+            send.addEventListener('click', sendChat);
+            input.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ e.preventDefault(); sendChat(); } });
+
+            addMessage("Hi I'm Patrick. Ask about the resume, skills, projects, or contact.", 'bot');
+        })();
+    </script>
+
 </body>
 </html>
