@@ -30,11 +30,12 @@ def home():
 
 @app.route('/open-resume')
 def open_resume():
-    # Replace 'resume.pdf' with your actual resume filename
-    # Make sure your resume file is in the static folder
+    # Return a URL to the resume in the static folder so it can be loaded in an iframe/modal.
+    # Make sure the file exists in /static (e.g. static/Patrick_Aglosolos_Resume.png)
+    from flask import url_for
     return jsonify({
         'success': True,
-        'url': 'Patrick_Aglosolos_Resume.docx.pdf'  # or 'resume.html' if it's an HTML file
+        'url': url_for('static', filename='Patrick_Aglosolos_Resume.png')
     })
 
 
