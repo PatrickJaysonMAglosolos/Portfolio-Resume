@@ -5,46 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ profile.name }} | Portfolio Resume</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h2 class="logo">Patrick Jayson Aglosolos</h2>
+            <div class="nav-links">
+                <a href="mailto:jayson123aglosolos@gmail.com" class="nav-link">Email</a>
+                <a href="https://www.linkedin.com/in/patrick-aglosolos-505631336/" target="_blank" rel="noreferrer" class="nav-link">LinkedIn</a>
+                <a href="https://github.com/jayson123aglosolos" target="_blank" rel="noreferrer" class="nav-link">GitHub</a>
+            </div>
+        </div>
+    </nav>
+
     <main class="page">
         <section class="hero card">
-            <p class="eyebrow">Portfolio Resume</p>
-            <h1>Patrick Jayson Aglosolos</h1>
-            <p class="about">Computer Engineering student with a strong background in tech support, mechatronics, and CAD operations. Gained solid field experience through 320+ hours of OJT and currently competing at the National level in the Worldskills Philippines Mechanical Engineering CAD competition, having won Gold at both the Provincial and Regional levels in 2026. I focus on practical troubleshooting and building clean, functional systems.</p>
-            <div class="links">
-                <a href="mailto:jayson123aglosolos@gmail,com">Email</a>
-                <a href="https://www.linkedin.com/in/patrick-aglosolos-505631336/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <div class="hero-content">
+                <p class="eyebrow">Computer Engineering Student</p>
+                <h1>Patrick Jayson Aglosolos</h1>
+                <p class="subtitle">Computer Engineering | Mechatronics | CAD Specialist</p>
+                <p class="about">Computer Engineering student with a strong background in tech support, mechatronics, and CAD operations. Gained solid field experience through 320+ hours of OJT and currently competing at the National level in the Worldskills Philippines Mechanical Engineering CAD competition, having won Gold at both the Provincial and Regional levels in 2026. I focus on practical troubleshooting and building clean, functional systems.</p>
+                <div class="links">
+                    <button id="resumeBtn" class="resume-button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download Resume
+                    </button>
+                </div>
             </div>
         </section>
 
-        <section class="card">
-            <h3>Skills</h3>
-            <div class="tags">
-                • Programming Languages: Python, C#, C++, Java<br>
-                • Software Tools & Frameworks: Git, VSCode<br>
-                • CAD Software: AutoCAD, Inventor
+        <section class="card skills-card">
+            <h3>Technical Skills</h3>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>Programming Languages</h4>
+                    <p>Python, C#, C++, Java</p>
+                </div>
+                <div class="skill-category">
+                    <h4>Software & Frameworks</h4>
+                    <p>Git, VSCode</p>
+                </div>
+                <div class="skill-category">
+                    <h4>CAD Software</h4>
+                    <p>AutoCAD, Inventor</p>
+                </div>
             </div>
         </section>
-        <section class="card">
-            <h3>Awards</h3>
-            <div class="tags">
-                • Worldskills Bataan Provincial Skills Competition 2026  —  Mechanical Engineering CAD — Gold Medalist<br>
-                • Worldskills Central Luzon Regional Skills Competition 2026  —  Mechanical Engineering CAD — Gold Medalist<br>
-                • Worldskills Philippine National Skill Competition 2026  —  Mechanical Engineering CAD — Ongoing
+
+        <section class="card awards-card">
+            <h3>Achievements & Awards</h3>
+            <div class="awards-list">
+                <div class="award-item">
+                    <div class="award-badge">🥇</div>
+                    <div class="award-content">
+                        <h4>Worldskills Provincial Competition</h4>
+                        <p>Mechanical Engineering CAD — Gold Medalist (2026)</p>
+                    </div>
+                </div>
+                <div class="award-item">
+                    <div class="award-badge">🥇</div>
+                    <div class="award-content">
+                        <h4>Worldskills Regional Competition</h4>
+                        <p>Mechanical Engineering CAD — Gold Medalist (2026)</p>
+                    </div>
+                </div>
+                <div class="award-item">
+                    <div class="award-badge">⭐</div>
+                    <div class="award-content">
+                        <h4>Worldskills National Competition</h4>
+                        <p>Mechanical Engineering CAD — Currently Competing (2026)</p>
+                    </div>
+                </div>
             </div>
         </section>
+
         <section class="card">
             <h3>Projects</h3>
             <div class="projects">
                 {% for project in profile.projects %}
                     <article class="project">
-                        <h4>{{ project.name }}</h4>
+                        <div class="project-header">
+                            <h4>{{ project.name }}</h4>
+                            <span class="project-icon">→</span>
+                        </div>
                         <p>{{ project.description }}</p>
                     </article>
                 {% endfor %}
             </div>
         </section>
+
+        <footer class="footer">
+            <p>© 2026 Patrick Jayson Aglosolos. All rights reserved.</p>
+        </footer>
     </main>
+
+    <script>
+        document.getElementById('resumeBtn').addEventListener('click', function() {
+            fetch('/open-resume')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.open(data.url, '_blank');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
 </body>
 </html>

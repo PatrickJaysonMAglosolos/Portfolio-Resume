@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 
 app = Flask(__name__)
 
@@ -26,6 +26,16 @@ PROFILE = {
 @app.route('/')
 def home():
     return render_template('index.html', profile=PROFILE)
+
+
+@app.route('/open-resume')
+def open_resume():
+    # Replace 'resume.pdf' with your actual resume filename
+    # Make sure your resume file is in the static folder
+    return jsonify({
+        'success': True,
+        'url': 'Patrick_Aglosolos_Resume.docx.pdf'  # or 'resume.html' if it's an HTML file
+    })
 
 
 if __name__ == '__main__':
